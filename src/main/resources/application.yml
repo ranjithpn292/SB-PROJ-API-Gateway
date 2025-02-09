@@ -5,6 +5,28 @@ spring:
   application:
     name: API-GATEWAY
 
+  cloud:
+    gateway:
+      routes:
+        - id: User-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/users/**  # Ensure this matches the incoming request path
+          filters:
+            - AddRequestHeader=Access-Control-Allow-Origin, "*"  # Allow all origins
+            - AddRequestHeader=Access-Control-Allow-Methods, "GET, POST, PUT, DELETE"
+
+
+        - id: Hotel-Service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/hotels/**
+
+        - id: Rating-Service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/ratings/**
+
 eureka:
   instances:
     prefer-ip-address: true
