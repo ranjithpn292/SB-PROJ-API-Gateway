@@ -15,6 +15,7 @@ spring:
           filters:
             - AddRequestHeader=Access-Control-Allow-Origin, "*"  # Allow all origins
             - AddRequestHeader=Access-Control-Allow-Methods, "GET, POST, PUT, DELETE"
+            - RewritePath=/users/(?<segment>.*), /${segment}  # Optional: Rewriting path before forwarding
 
 
         - id: Hotel-Service
@@ -27,11 +28,15 @@ spring:
           predicates:
             - Path=/ratings/**
 
-eureka:
-  instances:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+#eureka:
+#  instances:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
